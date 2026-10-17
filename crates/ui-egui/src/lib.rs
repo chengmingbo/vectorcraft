@@ -1147,6 +1147,7 @@ impl VectorcraftApp {
         background::poll(self);
         screen_color::poll(self, ctx);
         opening::poll(self);
+        panels::assistant::poll(self, ctx);
         #[cfg(not(target_arch = "wasm32"))]
         self.tick_link_updates(ctx, now);
         if !self.background.jobs.is_empty() || !self.opening.pending.is_empty() {

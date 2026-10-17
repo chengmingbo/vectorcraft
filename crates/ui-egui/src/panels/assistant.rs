@@ -90,8 +90,16 @@ impl Default for Assistant {
 /// access to the rest of the app, including its command dispatcher.
 pub fn show(app: &mut VectorcraftApp, ui: &mut Ui) {
     let mut assistant = std::mem::take(&mut app.assistant);
-    assistant.poll(app, ui.ctx());
     assistant.draw(app, ui);
+    app.assistant = assistant;
+}
+
+/// Handle what the sidecar sent since the last frame. Called from the app's logic, not from
+/// [`show`]: eframe skips the UI pass while the window is covered by another app or minimized,
+/// and the panel may be closed, and the model's tool calls must still run then.
+pub fn poll(app: &mut VectorcraftApp, ctx: &egui::Context) {
+    let mut assistant = std::mem::take(&mut app.assistant);
+    assistant.poll(app, ctx);
     app.assistant = assistant;
 }
 
@@ -628,5 +636,22 @@ mod tests {
         let mut value = json!({"depth": 1});
         rename(&mut value, "child_limit", "childLimit");
         assert_eq!(value, json!({"depth": 1}));
+    }
+
+    /// A tool call runs on a logic-only frame, as eframe runs while another app covers the
+    /// window, and with the panel closed: the answer used to wait until the window was seen again.
+    #[test]
+    fn tool_calls_run_without_the_panel_being_drawn() {
+        let mut app = VectorcraftApp::new(vectorcraft_engine::Session::new(), Default::default());
+        let (tx, rx) = mpsc::channel();
+        // No sidecar listens on port 1: the tool result's post fails quietly.
+        app.assistant = Assistant { port: 1, busy: true, receiver: Some(rx), ..Default::default() };
+        let exec = json!({"type": "exec", "name": "list_commands", "input": {"filter": "no such command"}, "callId": "c1"});
+        tx.send(WorkerEvent::Event(exec)).unwrap();
+        tx.send(WorkerEvent::Finished).unwrap();
+        let ctx = egui::Context::default();
+        ctx.run_ui(Default::default(), |ui| app.logic(ui.ctx())).textures_delta.clear();
+        assert!(app.assistant.messages.iter().any(|m| m.who == Who::Tool && m.text == "✓ list_commands"));
+        assert!(!app.assistant.busy);
     }
 }
