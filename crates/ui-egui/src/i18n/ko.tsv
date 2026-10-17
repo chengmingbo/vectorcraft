@@ -1,4 +1,22 @@
 # Korean (ko) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	AI 어시스턴트
+	New chat	새 채팅
+	Ask for an edit, a new illustration, or an explanation of the selected art.	편집, 새 일러스트레이션 또는 선택한 아트에 대한 설명을 요청하세요.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	선택 사항인 vectorcraft-ai-assistant 서버가 localhost에서 실행 중이어야 합니다.
+	You	나
+	Assistant	어시스턴트
+	Tool	도구
+	Queued	대기 중
+	Describe what you want to create or change…	만들거나 변경할 내용을 설명하세요…
+	Port:	포트:
+	Queue	대기열에 추가
+	Send	보내기
+	Stopped	중지됨
+	Wait for the current answer to finish.	현재 답변이 끝날 때까지 기다려 주세요.
+	No saved conversations yet.	저장된 대화가 아직 없습니다.
+	Earlier conversations. Type /resume and a number to continue one:	이전 대화입니다. 이어서 하려면 /resume과 번호를 입력하세요:
+	Pick a number from the list.	목록에서 번호를 고르세요.
+	Conversation resumed.	대화를 다시 시작했습니다.
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms).
 #
 # Clean-room: written from the meaning of VectorCraft's English labels in ordinary Korean
@@ -4540,3 +4558,6 @@ lighting	Light	광원
 	Movie Clip	무비 클립
 @msg	name is empty	이름이 비어 있습니다
 @msg	no symbol named `{n}`	이름이 `{n}`인 심볼이 없습니다
+@msg	Unknown assistant tool `{name}`	알 수 없는 어시스턴트 도구 `{name}`
+@msg	run_command needs `id`	run_command에는 `id`가 필요합니다
+@msg	AI server returned HTTP {status}: {error}	AI 서버가 HTTP {status}을(를) 반환했습니다: {error}

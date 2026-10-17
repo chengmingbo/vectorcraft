@@ -8,6 +8,11 @@ agent wall-clock hours, one agent. There is no `cargo xtask scorecard` or `cargo
 (the clean-room rule rules out a menu dump of Illustrator as an oracle; a checklist built from Illustrator's
 public menu documentation would be allowed).
 
+The initial G18 Prompt to Edit slice is now present: Window → AI Assistant opens a native panel that
+streams a pluggable API or agent CLI through the optional `vectorcraft-ai-assistant` sidecar and returns
+all document operations to VectorCraft's command dispatcher. Generative vector, recolor, fill and expand
+remain future work.
+
 ## Alpha gate
 
 The core-workflow gate from craftrules' progress-docs standard: what a typical professional does with

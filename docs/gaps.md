@@ -314,11 +314,15 @@ from G14 and the budget run of G15: **~170–270 h** one agent, ~50–80 h wall 
 
 ## G18 Generative AI features
 
+- **Partial:** Prompt to Edit now has a native AI Assistant panel backed by the optional
+  `vectorcraft-ai-assistant` sidecar. It supports multiple API and agent-CLI providers, streams replies,
+  queues follow-up messages and sends all reads and edits through the existing validated command API;
+  related edits use `command.batch` as one undo step. The WebAssembly plug-in ABI remains limited to object
+  filters and live effects, so the panel is built in until panel plug-ins exist.
 - **Missing:** Text to Vector Graphic, Generative Recolor, Generative Shape Fill (#766), Generative Expand,
-  Concept to Vector, Prompt to Edit, Rewrite Text. Adobe's run on its cloud models; ours would be a pluggable
-  provider.
-- **Needs:** an owner decision on models and providers.
-- **Estimate:** 30–60 h after that decision.
+  Concept to Vector, Rewrite Text, bundled/provider-free setup, web transport and native cross-platform
+  credential storage.
+- **Estimate:** 25–50 h plus an owner decision for hosted generative models.
 
 ## G19 Accessibility
 

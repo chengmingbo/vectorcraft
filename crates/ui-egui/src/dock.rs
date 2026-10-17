@@ -411,7 +411,12 @@ pub(crate) fn panel_body(app: &mut VectorcraftApp, ui: &mut Ui, id: &str, width:
                 panels::layers::show(app, ui);
             }
             Some(DockTab::Libraries) => panels::libraries(app, ui),
-            None => panels::show_icon_panel(app, ui, id),
+            None => {
+                if id == panels::assistant::ID {
+                    ui.set_max_height(tall);
+                }
+                panels::show_icon_panel(app, ui, id);
+            }
         }
     });
 }

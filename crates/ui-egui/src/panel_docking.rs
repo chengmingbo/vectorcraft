@@ -506,7 +506,7 @@ impl craft_ui::docking::DockContent<String> for PanelContent<'_> {
     fn body(&mut self, ui: &mut egui::Ui, panel: &String) {
         let width = ui.available_width();
         let height = (ui.available_height() - 20.0).max(0.0);
-        if crate::state::DockTab::from_id(panel).is_some() {
+        if crate::state::DockTab::from_id(panel).is_some() || panel == crate::panels::assistant::ID {
             crate::dock::panel_body(self.app, ui, panel, width, height);
         } else {
             egui::ScrollArea::vertical()

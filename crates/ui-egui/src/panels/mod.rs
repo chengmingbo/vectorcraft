@@ -8,6 +8,7 @@ pub mod align;
 pub mod appearance;
 pub mod artboards;
 pub mod asset_export;
+pub mod assistant;
 pub mod attributes;
 pub mod brushes;
 pub mod character;
@@ -152,6 +153,7 @@ pub fn show_icon_panel(app: &mut VectorcraftApp, ui: &mut Ui, id: &str) {
         "info" => info::show(app, ui),
         "separations" => separations::show(app, ui),
         "artboards" => artboards::show(app, ui),
+        assistant::ID => assistant::show(app, ui),
         "gradient" => gradient::show(app, ui),
         "character" => character::show(app, ui),
         "paragraph" => paragraph::show(app, ui),

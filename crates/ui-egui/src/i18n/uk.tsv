@@ -1,4 +1,22 @@
 # Ukrainian (uk) catalog. Same format as zh-hant.tsv: context <TAB> source <TAB> translation.
+	AI Assistant	ШІ-асистент
+	New chat	Новий чат
+	Ask for an edit, a new illustration, or an explanation of the selected art.	Попросіть змінити роботу, створити нову ілюстрацію або пояснити виділений об’єкт.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	Додатковий сервер vectorcraft-ai-assistant має працювати на localhost.
+	You	Ви
+	Assistant	Асистент
+	Tool	Інструмент
+	Queued	У черзі
+	Describe what you want to create or change…	Опишіть, що потрібно створити або змінити…
+	Port:	Порт:
+	Queue	До черги
+	Send	Надіслати
+	Stopped	Зупинено
+	Wait for the current answer to finish.	Дочекайтеся завершення поточної відповіді.
+	No saved conversations yet.	Збережених розмов поки немає.
+	Earlier conversations. Type /resume and a number to continue one:	Попередні розмови. Щоб продовжити, введіть /resume і номер:
+	Pick a number from the list.	Виберіть номер зі списку.
+	Conversation resumed.	Розмову продовжено.
 # Empty context = a plain UI string; @plural = one|few|many; @msg = a status/error template.
 #
 # Clean-room: translations of VectorCraft's labels, reviewed against their English meaning.
@@ -4556,3 +4574,6 @@ lighting	Light	Світло
 	Movie Clip	Кліп
 @msg	name is empty	ім’я порожнє
 @msg	no symbol named `{n}`	немає символу з назвою `{n}`
+@msg	Unknown assistant tool `{name}`	Невідомий інструмент асистента `{name}`
+@msg	run_command needs `id`	для run_command потрібен `id`
+@msg	AI server returned HTTP {status}: {error}	ШІ-сервер повернув HTTP {status}: {error}

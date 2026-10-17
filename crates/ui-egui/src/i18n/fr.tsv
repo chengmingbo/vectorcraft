@@ -1,4 +1,22 @@
 # French (fr) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	Assistant IA
+	New chat	Nouvelle discussion
+	Ask for an edit, a new illustration, or an explanation of the selected art.	Demandez une modification, une nouvelle illustration ou une explication de l’illustration sélectionnée.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	Le serveur facultatif vectorcraft-ai-assistant doit fonctionner sur localhost.
+	You	Vous
+	Assistant	Assistant
+	Tool	Outil
+	Queued	En attente
+	Describe what you want to create or change…	Décrivez ce que vous voulez créer ou modifier…
+	Port:	Port :
+	Queue	Mettre en attente
+	Send	Envoyer
+	Stopped	Arrêté
+	Wait for the current answer to finish.	Attendez la fin de la réponse en cours.
+	No saved conversations yet.	Aucune conversation enregistrée pour l’instant.
+	Earlier conversations. Type /resume and a number to continue one:	Conversations précédentes. Tapez /resume suivi d’un numéro pour en reprendre une :
+	Pick a number from the list.	Choisissez un numéro dans la liste.
+	Conversation resumed.	Conversation reprise.
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms).
 #
 # Clean-room: written from the meaning of VectorCraft's English labels in standard French, using the
@@ -4998,3 +5016,6 @@ theme	Appearance	Apparence
 	Movie Clip	Clip
 @msg	name is empty	le nom est vide
 @msg	no symbol named `{n}`	aucun symbole nommé `{n}`
+@msg	Unknown assistant tool `{name}`	Outil d’assistant inconnu `{name}`
+@msg	run_command needs `id`	run_command a besoin de `id`
+@msg	AI server returned HTTP {status}: {error}	Le serveur d’IA a renvoyé HTTP {status} : {error}

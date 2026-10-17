@@ -1,4 +1,22 @@
 # Traditional Chinese (zh-hant) catalog. Columns, separated by a TAB:  context <TAB> source <TAB> translation
+	AI Assistant	AI 助理
+	New chat	新對話
+	Ask for an edit, a new illustration, or an explanation of the selected art.	要求編輯、建立新插圖，或說明所選圖稿。
+	The optional vectorcraft-ai-assistant server must be running on localhost.	選用的 vectorcraft-ai-assistant 伺服器必須在 localhost 上執行。
+	You	你
+	Assistant	助理
+	Tool	工具
+	Queued	已排入佇列
+	Describe what you want to create or change…	描述你想建立或變更的內容…
+	Port:	連接埠：
+	Queue	排入佇列
+	Send	傳送
+	Stopped	已停止
+	Wait for the current answer to finish.	請等待目前的回答完成。
+	No saved conversations yet.	還沒有儲存的對話。
+	Earlier conversations. Type /resume and a number to continue one:	先前的對話。輸入 /resume 加編號以繼續其中一個：
+	Pick a number from the list.	請從清單中選擇一個編號。
+	Conversation resumed.	已恢復對話。
 #
 #   context  empty                a plain UI string; `source` is the English text in the code
 #            @id                  a command id (e.g. file.saveAs): wins over the English text for

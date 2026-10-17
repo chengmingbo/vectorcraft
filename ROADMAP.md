@@ -60,7 +60,7 @@ everything is measured from our code against Illustrator's public documentation.
 | Stability | ~60% | 30–50 | [gaps.md › G10](docs/gaps.md#g10-launch-and-stability-on-real-machines) |
 | Platforms | 80% | 15–25 | [gaps.md › G8](docs/gaps.md#g8-hardening-at-scale) |
 | Ecosystem and plug-ins | 15% | 30–60 | [gaps.md › G17](docs/gaps.md#g17-ecosystem-third-party-plug-ins) |
-| AI features (generative) | 0% | 30–60 + owner decision | [gaps.md › G18](docs/gaps.md#g18-generative-ai-features) |
+| AI features (generative) | 10% | 25–50 + owner decision | [gaps.md › G18](docs/gaps.md#g18-generative-ai-features) |
 | Agent automation | beyond Illustrator | — | [mcp.md](docs/mcp.md) |
 
 The dimension hours overlap (feature rows hold some UI, format and AI work), so they don't add up to the total.
@@ -91,7 +91,7 @@ The dimension hours overlap (feature rows hold some UI, format and AI work), so 
 | Automation (Actions, Variables, scripting) | 60% | 8–14 |
 | UI chrome (panels, Properties, preferences) | 80% | 13–20 |
 | Libraries, Links, Package | 82% | 2–3 |
-| Generative AI | 0% | 30–60 |
+| Generative AI | 10% | 25–50 |
 
 Weights, evidence and the missing items per area: [target-app-parity.md](docs/target-app-parity.md#feature-areas).
 

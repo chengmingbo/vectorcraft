@@ -1,4 +1,21 @@
 # Simplified Chinese (zh-hans) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	AI 助手
+	New chat	新对话
+	Ask for an edit, a new illustration, or an explanation of the selected art.	要求编辑、新建插图，或解释所选图稿。
+	The optional vectorcraft-ai-assistant server must be running on localhost.	可选的 vectorcraft-ai-assistant 服务器必须在 localhost 上运行。
+	You	你
+	Assistant	助手
+	Queued	已排队
+	Describe what you want to create or change…	描述你想创建或更改的内容…
+	Port:	端口：
+	Queue	加入队列
+	Send	发送
+	Stopped	已停止
+	Wait for the current answer to finish.	请等待当前回答完成。
+	No saved conversations yet.	还没有保存的对话。
+	Earlier conversations. Type /resume and a number to continue one:	之前的对话。输入 /resume 加编号继续其中一个：
+	Pick a number from the list.	请从列表中选择一个编号。
+	Conversation resumed.	已恢复对话。
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms, Chinese
 # has one). `{name}` placeholders must appear in both columns; the trailing "…" is kept.
 #

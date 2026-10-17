@@ -1,4 +1,22 @@
 # Japanese (ja) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	AIアシスタント
+	New chat	新しいチャット
+	Ask for an edit, a new illustration, or an explanation of the selected art.	編集、新しいイラスト、または選択したアートの説明を依頼できます。
+	The optional vectorcraft-ai-assistant server must be running on localhost.	オプションの vectorcraft-ai-assistant サーバーが localhost で実行されている必要があります。
+	You	あなた
+	Assistant	アシスタント
+	Tool	ツール
+	Queued	待機中
+	Describe what you want to create or change…	作成または変更したい内容を入力…
+	Port:	ポート：
+	Queue	待機列に追加
+	Send	送信
+	Stopped	停止しました
+	Wait for the current answer to finish.	現在の回答が終わるまでお待ちください。
+	No saved conversations yet.	保存された会話はまだありません。
+	Earlier conversations. Type /resume and a number to continue one:	以前の会話です。続けるには /resume と番号を入力してください：
+	Pick a number from the list.	一覧から番号を選んでください。
+	Conversation resumed.	会話を再開しました。
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms).
 #
 # Clean-room: menu and feature names follow the names Japanese users of vector illustration
@@ -4617,3 +4635,6 @@ lighting	Light	ライト
 	Movie Clip	ムービークリップ
 @msg	name is empty	名前が空です
 @msg	no symbol named `{n}`	`{n}` という名前のシンボルはありません
+@msg	Unknown assistant tool `{name}`	不明なアシスタントツール `{name}`
+@msg	run_command needs `id`	run_command には `id` が必要です
+@msg	AI server returned HTTP {status}: {error}	AI サーバーが HTTP {status} を返しました: {error}

@@ -248,7 +248,7 @@ The scores are self-assessed from our code against Illustrator's public document
 - about half of the Photoshop-style raster effects (27 of 57 still missing; Film Grain is available under Artistic, Halftone Pattern under Sketch) and the Effect Gallery;
 - CJK composition for vertical type (vertical type itself has initial support, with a Japanese interface);
 - scripting, and the rest of Variables (image and graph kinds, dataset import);
-- generative AI features.
+- generative vector/recolor/fill features (Prompt to Edit has an initial multi-provider AI Assistant panel).
 
 **Where we're going:** next is the interaction-fidelity pass, `.ai` files from real users and start-up stability,
 alongside the raster-effects package; then type, the Illustrator 2026 additions and 3D. The ranked list is in

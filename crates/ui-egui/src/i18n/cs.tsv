@@ -1,4 +1,21 @@
 # Czech (cs) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	Asistent AI
+	New chat	Nový chat
+	Ask for an edit, a new illustration, or an explanation of the selected art.	Požádejte o úpravu, nový obrázek nebo vysvětlení vybrané kresby.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	Volitelný server vectorcraft-ai-assistant musí běžet na localhostu.
+	You	Vy
+	Assistant	Asistent
+	Queued	Ve frontě
+	Describe what you want to create or change…	Popište, co chcete vytvořit nebo změnit…
+	Port:	Port:
+	Queue	Zařadit
+	Send	Odeslat
+	Stopped	Zastaveno
+	Wait for the current answer to finish.	Počkejte, až bude aktuální odpověď hotová.
+	No saved conversations yet.	Zatím nejsou uložené žádné konverzace.
+	Earlier conversations. Type /resume and a number to continue one:	Dřívější konverzace. Pro pokračování napište /resume a číslo:
+	Pick a number from the list.	Vyberte číslo ze seznamu.
+	Conversation resumed.	Konverzace obnovena.
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|few|other" forms).
 #
 # Clean-room: every entry is written from the meaning of VectorCraft's English label, following
@@ -4999,3 +5016,6 @@ mark-style	Japanese	Japonské
 	Movie Clip	Filmový klip
 @msg	name is empty	název je prázdný
 @msg	no symbol named `{n}`	žádný symbol s názvem `{n}`
+@msg	Unknown assistant tool `{name}`	Neznámý nástroj asistenta `{name}`
+@msg	run_command needs `id`	run_command potřebuje `id`
+@msg	AI server returned HTTP {status}: {error}	AI server vrátil HTTP {status}: {error}

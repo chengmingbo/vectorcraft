@@ -1,4 +1,21 @@
 # Hungarian (hu) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	MI-asszisztens
+	New chat	Új csevegés
+	Ask for an edit, a new illustration, or an explanation of the selected art.	Kérjen szerkesztést, új illusztrációt vagy a kijelölt grafika magyarázatát.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	Az opcionális vectorcraft-ai-assistant kiszolgálónak a localhoston kell futnia.
+	You	Ön
+	Assistant	Asszisztens
+	Queued	Várólistán
+	Describe what you want to create or change…	Írja le, mit szeretne létrehozni vagy módosítani…
+	Port:	Port:
+	Queue	Várólistára
+	Send	Küldés
+	Stopped	Leállítva
+	Wait for the current answer to finish.	Várja meg, amíg az aktuális válasz elkészül.
+	No saved conversations yet.	Még nincsenek mentett beszélgetések.
+	Earlier conversations. Type /resume and a number to continue one:	Korábbi beszélgetések. A folytatáshoz írja be: /resume és egy számot:
+	Pick a number from the list.	Válasszon számot a listából.
+	Conversation resumed.	Beszélgetés folytatva.
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" source, and a
 # single translated form: Hungarian uses the singular after a number, see `plural_none`).
 #
@@ -4966,3 +4983,6 @@ imageTrace	Outline	Körvonal
 	Movie Clip	Mozgóklip
 @msg	name is empty	a név üres
 @msg	no symbol named `{n}`	nincs `{n}` nevű szimbólum
+@msg	Unknown assistant tool `{name}`	Ismeretlen asszisztenseszköz: `{name}`
+@msg	run_command needs `id`	a run_command paranccsal meg kell adni: `id`
+@msg	AI server returned HTTP {status}: {error}	Az MI-kiszolgáló HTTP {status} választ adott: {error}

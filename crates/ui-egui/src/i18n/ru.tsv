@@ -1,4 +1,22 @@
 # Russian (ru) catalog. Same format as zh-hant.tsv:  context <TAB> source <TAB> translation
+	AI Assistant	ИИ-ассистент
+	New chat	Новый чат
+	Ask for an edit, a new illustration, or an explanation of the selected art.	Попросите изменить работу, создать новую иллюстрацию или объяснить выделенный объект.
+	The optional vectorcraft-ai-assistant server must be running on localhost.	Дополнительный сервер vectorcraft-ai-assistant должен работать на localhost.
+	You	Вы
+	Assistant	Ассистент
+	Tool	Инструмент
+	Queued	В очереди
+	Describe what you want to create or change…	Опишите, что нужно создать или изменить…
+	Port:	Порт:
+	Queue	В очередь
+	Send	Отправить
+	Stopped	Остановлено
+	Wait for the current answer to finish.	Дождитесь окончания текущего ответа.
+	No saved conversations yet.	Сохранённых разговоров пока нет.
+	Earlier conversations. Type /resume and a number to continue one:	Предыдущие разговоры. Чтобы продолжить, введите /resume и номер:
+	Pick a number from the list.	Выберите номер из списка.
+	Conversation resumed.	Разговор продолжен.
 # (empty context = a plain UI string; `@id` = a command id; `@plural` = "one|other" forms).
 #
 # Clean-room: written from the meaning of VectorCraft's English labels in neutral, international
@@ -4572,3 +4590,6 @@ lighting	Light	Свет
 	Movie Clip	Видеоклип
 @msg	name is empty	имя пустое
 @msg	no symbol named `{n}`	нет символа с именем `{n}`
+@msg	Unknown assistant tool `{name}`	Неизвестный инструмент ассистента `{name}`
+@msg	run_command needs `id`	для run_command нужен `id`
+@msg	AI server returned HTTP {status}: {error}	ИИ-сервер вернул HTTP {status}: {error}

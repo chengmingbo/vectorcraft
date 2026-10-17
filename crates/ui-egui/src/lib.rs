@@ -362,6 +362,8 @@ pub struct VectorcraftApp {
     pub services: Services,
     pub canvas: CanvasCache,
     pub perf: Perf,
+    /// Conversation and loopback transport for the optional AI sidecar.
+    pub assistant: panels::assistant::Assistant,
     /// macOS: the room the app bar keeps at its left for the window buttons over it, in points
     /// (0 where the OS draws no buttons over the app bar).
     pub titlebar_inset: f32,
@@ -503,6 +505,7 @@ impl VectorcraftApp {
                 cursors: Default::default(),
             },
             perf: Perf::default(),
+            assistant: Default::default(),
             titlebar_inset: 0.0,
             last_effect: None,
             run_count: 0,

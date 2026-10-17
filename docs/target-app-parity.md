@@ -90,7 +90,7 @@ dominate; 3D, graphs and automation are specialist). They sum to 105. Feature de
 | Automation (Actions, Variables, scripting, batch) | 3 | 60% | a scripting surface (Illustrator: JavaScript/ExtendScript), Batch, image and graph variables, dataset import/export | 8–14 | estimated; MCP `add_text` exposes existing vertical type; score and hours unchanged |
 | UI chrome (panels, Properties, workspaces, preferences) | 6 | 80% | Properties per context, ~16 Preferences options stored but unused (#394), panels outside the window, SVG Interactivity, context menus beyond the canvas, accessibility | 13–20 | estimated; macOS save Format menu implemented (#866), score and hours unchanged; Eyedropper cursor and precise setting checked (#1269), OS visual QA unverified; numeric-field focus and normal text drags regression-tested (#1326, in part); movements below the click threshold still select all; artboard navigation synchronizes the tool selection before destructive actions |
 | Libraries, Links, Package | 2 | 82% | shared libraries, linked graphics, gradients and patterns as library items (no cloud by design) | 2–3 | estimated |
-| Generative AI (Text to Vector, Generative Recolor, Shape Fill, Concept to Vector, Prompt to Edit, Rewrite Text) | 2 | 0% | a pluggable provider and the panels; needs an owner decision on models | 30–60 | measured (absent) |
+| Generative AI (Text to Vector, Generative Recolor, Shape Fill, Concept to Vector, Prompt to Edit, Rewrite Text) | 2 | 10% | Prompt to Edit panel and pluggable API/CLI sidecar landed; generative vector/recolor/fill/expand and bundled setup remain | 25–50 | estimated |
 | **Feature depth** | **105** | **~75%** | | **~250–420** | |
 | Interaction-fidelity pass (every tool's modifiers, cursors, Properties per context) | | | [ui-parity.md](ui-parity.md) | 60–90 | estimated |
 | Hardening (real-file corpus, cross-platform and browser QA, launch failures, performance budgets) | | | [gaps.md](gaps.md) | 50–80 | estimated; PngSuite fetch integrity and size budgets regression-tested (#1729) |
@@ -246,7 +246,7 @@ what keeps it from beta, not from alpha.
 | Stability | ~60% | 30–50 | estimated | [gaps.md](gaps.md) |
 | Platforms (macOS, Windows x64/arm64, Linux, FreeBSD, web) | 80% | 15–25 | estimated | [gaps.md](gaps.md) |
 | Ecosystem and plug-ins (scripting, third-party plug-ins) | 15% | 30–60 | estimated | [gaps.md](gaps.md) |
-| AI features (generative) | 0% | 30–60 (+ owner decision) | measured (absent) | [gaps.md](gaps.md) |
+| AI features (generative) | 10% | 25–50 (+ owner decision for hosted generation) | estimated | [gaps.md](gaps.md) |
 | Agent automation (MCP, CLI, control channel) | beyond Illustrator | — | measured | [mcp.md](mcp.md) |
 
 The dimension hours overlap (the feature rows already hold some UI, format and AI work), so they don't add up
