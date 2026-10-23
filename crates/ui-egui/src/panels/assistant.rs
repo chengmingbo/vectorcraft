@@ -67,7 +67,13 @@ pub struct Assistant {
     queue: Vec<String>,
     receiver: Option<Receiver<WorkerEvent>>,
     resume_receiver: Option<Receiver<ResumeEvent>>,
+    status_receiver: Option<Receiver<Result<Value, String>>>,
+    /// Height of the input box; drag the handle above it to change it.
+    input_height: f32,
 }
+
+const INPUT_HEIGHT: f32 = 96.0;
+const MIN_INPUT_HEIGHT: f32 = 48.0;
 
 impl Default for Assistant {
     fn default() -> Self {
@@ -82,6 +88,8 @@ impl Default for Assistant {
             queue: Vec::new(),
             receiver: None,
             resume_receiver: None,
+            status_receiver: None,
+            input_height: INPUT_HEIGHT,
         }
     }
 }
@@ -125,7 +133,8 @@ impl Assistant {
         // Keep the composer visible: only the transcript scrolls. The panel used to rely on its
         // parent icon-panel scroller, which moved the input below the viewport as chat grew.
         let queued_height = if self.queue.is_empty() { 0.0 } else { ui.spacing().interact_size.y + ui.spacing().item_spacing.y };
-        let composer_height = 76.0 + ui.spacing().interact_size.y + queued_height + ui.spacing().item_spacing.y * 3.0 + 8.0;
+        let input_height = self.input_height.clamp(MIN_INPUT_HEIGHT, (ui.available_height() * 0.6).max(MIN_INPUT_HEIGHT));
+        let composer_height = input_height + 6.0 + ui.spacing().interact_size.y + queued_height + ui.spacing().item_spacing.y * 3.0 + 8.0;
         let transcript_height = (ui.available_height() - composer_height).max(48.0);
         ScrollArea::vertical()
             .id_salt("assistant-transcript")
@@ -152,12 +161,23 @@ impl Assistant {
                 }
             });
 
-        ui.separator();
+        // The separator above the composer is a handle: drag it up for a taller input box,
+        // double-click it to reset.
+        let (handle, response) = ui.allocate_exact_size(egui::vec2(ui.available_width(), 6.0), egui::Sense::click_and_drag());
+        let response = response.on_hover_cursor(egui::CursorIcon::ResizeVertical).on_hover_text(tl!("Drag to resize the input box · double-click to reset"));
+        if response.dragged() {
+            self.input_height = (input_height - response.drag_delta().y).clamp(MIN_INPUT_HEIGHT, (ui.ctx().content_rect().height() * 0.6).max(MIN_INPUT_HEIGHT));
+        }
+        if response.double_clicked() {
+            self.input_height = INPUT_HEIGHT;
+        }
+        let stroke = if response.hovered() || response.dragged() { ui.visuals().selection.stroke } else { ui.visuals().widgets.noninteractive.bg_stroke };
+        ui.painter().hline(handle.x_range(), handle.center().y, stroke);
         if !self.queue.is_empty() {
             ui.label(RichText::new(format!("{}: {}", tl!("Queued"), self.queue.len())).small());
         }
         let edit = ui.add_sized(
-            [ui.available_width(), 76.0],
+            [ui.available_width(), input_height],
             TextEdit::multiline(&mut self.input).hint_text(tl!("Describe what you want to create or change…")),
         );
         let send_key = edit.has_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter) && !i.modifiers.shift);
@@ -192,6 +212,14 @@ impl Assistant {
         if let Some(pick) = resume_command(&text) {
             self.input.clear();
             self.resume(pick, ctx);
+            return;
+        }
+        if text.eq_ignore_ascii_case("/status") || text.eq_ignore_ascii_case("/usage") {
+            self.input.clear();
+            let (tx, rx) = mpsc::channel();
+            self.status_receiver = Some(rx);
+            self.messages.push(Message { who: Who::Status, text: tl!("Checking…").to_string() });
+            start_status(self.port, self.chat_id.clone(), self.provider.clone(), tx, ctx.clone());
             return;
         }
         if text.is_empty() || self.busy {
@@ -283,8 +311,23 @@ impl Assistant {
         }
     }
 
+    /// `/status`: the conversation's tokens and what the provider reports about the plan.
+    fn poll_status(&mut self) {
+        let Some(rx) = &self.status_receiver else { return };
+        let Ok(result) = rx.try_recv() else { return };
+        self.status_receiver = None;
+        let text = match result {
+            Ok(report) => status_text(&report),
+            Err(error) => format!("⚠ {error}"),
+        };
+        if let Some(message) = self.messages.iter_mut().rev().find(|m| m.who == Who::Status) {
+            message.text = text;
+        }
+    }
+
     fn poll(&mut self, app: &mut VectorcraftApp, ctx: &egui::Context) {
         self.poll_resume(ctx);
+        self.poll_status();
         let mut events = Vec::new();
         if let Some(rx) = &self.receiver {
             while let Ok(event) = rx.try_recv() {
@@ -328,6 +371,11 @@ impl Assistant {
                 self.messages.push(Message { who: Who::Status, text: format!("⚠ {}", event["message"].as_str().unwrap_or("Assistant error")) })
             }
             "stopped" => self.messages.push(Message { who: Who::Status, text: tl!("Stopped").to_string() }),
+            "usage" => {
+                if let Some(line) = event.get("line").and_then(Value::as_str).filter(|l| !l.is_empty()) {
+                    self.messages.push(Message { who: Who::Status, text: line.to_string() });
+                }
+            }
             "exec" => self.run_tool(app, &event, ctx),
             _ => {}
         }
@@ -454,6 +502,41 @@ fn start_chat(port: u16, body: Value, sender: mpsc::Sender<WorkerEvent>, ctx: eg
 fn start_chat(_port: u16, _body: Value, sender: mpsc::Sender<WorkerEvent>, ctx: egui::Context) {
     let _ = sender.send(WorkerEvent::Error("The built-in assistant currently needs the desktop app.".into()));
     let _ = sender.send(WorkerEvent::Finished);
+    ctx.request_repaint();
+}
+
+/// The `/api/status` report as plain text: "label: value" lines, then the tool's own text.
+fn status_text(report: &Value) -> String {
+    let mut lines = vec![report.get("title").and_then(Value::as_str).unwrap_or("Status").to_string()];
+    for row in report.get("rows").and_then(Value::as_array).into_iter().flatten() {
+        let label = row.get("label").and_then(Value::as_str).unwrap_or_default();
+        let value = row.get("value").and_then(Value::as_str).unwrap_or_default();
+        lines.push(format!("{label}: {value}"));
+    }
+    for key in ["text", "details", "note"] {
+        if let Some(text) = report.get(key).and_then(Value::as_str).filter(|t| !t.is_empty()) {
+            lines.push(String::new());
+            lines.push(text.to_string());
+        }
+    }
+    if let Some(error) = report.get("error").and_then(Value::as_str) {
+        lines.push(format!("⚠ {error}"));
+    }
+    lines.join("\n")
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn start_status(port: u16, chat_id: String, provider: String, sender: mpsc::Sender<Result<Value, String>>, ctx: egui::Context) {
+    std::thread::spawn(move || {
+        let encode = |s: &str| s.chars().filter(|c| c.is_ascii_alphanumeric() || *c == '-' || *c == '_').collect::<String>();
+        let _ = sender.send(get_json(port, &format!("/api/status?chatId={}&provider={}", encode(&chat_id), encode(&provider))));
+        ctx.request_repaint();
+    });
+}
+
+#[cfg(target_arch = "wasm32")]
+fn start_status(_port: u16, _chat_id: String, _provider: String, sender: mpsc::Sender<Result<Value, String>>, ctx: egui::Context) {
+    let _ = sender.send(Err("The built-in assistant currently needs the desktop app.".into()));
     ctx.request_repaint();
 }
 
@@ -619,6 +702,16 @@ mod tests {
         let mut value = json!({"child_limit": 12, "depth": 1});
         rename(&mut value, "child_limit", "childLimit");
         assert_eq!(value, json!({"childLimit": 12, "depth": 1}));
+    }
+
+    #[test]
+    fn status_text_lists_rows_and_notes() {
+        let report = json!({
+            "title": "Codex · status",
+            "rows": [{"label": "This conversation", "value": "no answers yet"}, {"label": "5-hour limit", "value": "23% used", "percent": 23}],
+            "note": "From Codex's newest session log.",
+        });
+        assert_eq!(status_text(&report), "Codex · status\nThis conversation: no answers yet\n5-hour limit: 23% used\n\nFrom Codex's newest session log.");
     }
 
     #[test]
