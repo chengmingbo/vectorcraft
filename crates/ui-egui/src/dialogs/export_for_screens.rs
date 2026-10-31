@@ -138,7 +138,8 @@ pub(crate) fn open_assets(app: &mut VectorcraftApp, checked: Option<&[u64]>) {
 }
 
 /// Open the dialog on the settings the active document last exported with (else one PNG row at
-/// 1x, into the Desktop), every asset checked. While the Artboard tool is in use, the artboards it
+/// 1x), every asset checked. Start beside the current file, or use the last export folder for an
+/// untitled document (else the Desktop). While the Artboard tool is in use, the artboards it
 /// has selected (the rows the Artboards panel highlights) are the ones chosen instead.
 pub fn open(app: &mut VectorcraftApp) {
     let (n, saved, assets) = app
@@ -165,7 +166,10 @@ pub fn open(app: &mut VectorcraftApp) {
     for (id, _) in SETTINGS {
         settings.insert(id.into(), Value::Object(saved_options(app, &saved, id)));
     }
-    let folder = get("folder").and_then(Value::as_str).filter(|f| !f.is_empty()).map(str::to_string).or_else(fileio::export_folder);
+    let folder = crate::io::suggested(app, "")
+        .1
+        .or_else(|| get("folder").and_then(Value::as_str).filter(|f| !f.is_empty()).map(str::to_string))
+        .or_else(fileio::export_folder);
     // Where files go: the saved choice, else a folder per row as Create Sub-folders did.
     let folders = get("folders")
         .and_then(Value::as_str)

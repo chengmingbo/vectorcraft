@@ -35,6 +35,8 @@ mod mac_fonts;
 #[cfg(target_os = "macos")]
 mod mac_menu;
 #[cfg(target_os = "macos")]
+mod mac_save;
+#[cfg(target_os = "macos")]
 mod mac_screen_color;
 #[cfg(target_os = "macos")]
 mod mac_window;
@@ -485,11 +487,11 @@ fn start_pick(request: PickRequest, parent: &Parent, ui: &egui::Context) -> Opti
             let picked = dialog.pick_files();
             Box::pin(async move { picked.await.unwrap_or_default().iter().map(path).collect() })
         }
-        PickRequest::Save(_) => {
-            // Nothing is added to the sheet once rfd has begun it: an accessory view set then made
-            // recent macOS versions dismiss the sheet at once, so nothing could be saved (#1800).
-            let picked = dialog.save_file();
-            Box::pin(async move { picked.await.iter().map(path).collect() })
+        PickRequest::Save(ref pick) => {
+            // Set the actual directory before presenting the sheet; rfd 0.17 appends the
+            // suggested filename to it and AppKit then falls back to a previous location.
+            let picked = mac_save::show(window, pick)?;
+            Box::pin(async move { picked.recv().unwrap_or_default() })
         }
         PickRequest::Folder => {
             let picked = dialog.pick_folder();

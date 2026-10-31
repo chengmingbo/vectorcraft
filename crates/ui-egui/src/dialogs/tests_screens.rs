@@ -84,6 +84,24 @@ fn opens_on_defaults_and_draws_every_view() {
 }
 
 #[test]
+fn saved_document_exports_beside_its_current_file_instead_of_an_old_export_folder() {
+    let (mut app, _) = app(1, false);
+    let st = app.session.active_mut().unwrap();
+    st.path = Some("/art/current/Poster.vectorcraft".into());
+    std::sync::Arc::make_mut(&mut st.doc).export_settings.insert("folder".into(), json!("/art/old-export"));
+    open(&mut app);
+    assert_eq!(field(&app, "folder"), json!("/art/current"));
+    app.ui.dialog = None;
+    app.session.active_mut().unwrap().path = Some("/art/moved/Poster.vectorcraft".into());
+    open(&mut app);
+    assert_eq!(field(&app, "folder"), json!("/art/moved"));
+    app.ui.dialog = None;
+    app.session.active_mut().unwrap().path = None;
+    open(&mut app);
+    assert_eq!(field(&app, "folder"), json!("/art/old-export"));
+}
+
+#[test]
 fn checked_artboards_read_as_a_range() {
     let (mut app, _) = app(5, false);
     open(&mut app);

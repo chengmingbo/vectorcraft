@@ -164,14 +164,17 @@ impl Assistant {
         // The separator above the composer is a handle: drag it up for a taller input box,
         // double-click it to reset.
         let (handle, response) = ui.allocate_exact_size(egui::vec2(ui.available_width(), 6.0), egui::Sense::click_and_drag());
-        let response = response.on_hover_cursor(egui::CursorIcon::ResizeVertical).on_hover_text(tl!("Drag to resize the input box · double-click to reset"));
+        let response =
+            response.on_hover_cursor(egui::CursorIcon::ResizeVertical).on_hover_text(tl!("Drag to resize the input box · double-click to reset"));
         if response.dragged() {
-            self.input_height = (input_height - response.drag_delta().y).clamp(MIN_INPUT_HEIGHT, (ui.ctx().content_rect().height() * 0.6).max(MIN_INPUT_HEIGHT));
+            self.input_height =
+                (input_height - response.drag_delta().y).clamp(MIN_INPUT_HEIGHT, (ui.ctx().content_rect().height() * 0.6).max(MIN_INPUT_HEIGHT));
         }
         if response.double_clicked() {
             self.input_height = INPUT_HEIGHT;
         }
-        let stroke = if response.hovered() || response.dragged() { ui.visuals().selection.stroke } else { ui.visuals().widgets.noninteractive.bg_stroke };
+        let stroke =
+            if response.hovered() || response.dragged() { ui.visuals().selection.stroke } else { ui.visuals().widgets.noninteractive.bg_stroke };
         ui.painter().hline(handle.x_range(), handle.center().y, stroke);
         if !self.queue.is_empty() {
             ui.label(RichText::new(format!("{}: {}", tl!("Queued"), self.queue.len())).small());
@@ -711,7 +714,10 @@ mod tests {
             "rows": [{"label": "This conversation", "value": "no answers yet"}, {"label": "5-hour limit", "value": "23% used", "percent": 23}],
             "note": "From Codex's newest session log.",
         });
-        assert_eq!(status_text(&report), "Codex · status\nThis conversation: no answers yet\n5-hour limit: 23% used\n\nFrom Codex's newest session log.");
+        assert_eq!(
+            status_text(&report),
+            "Codex · status\nThis conversation: no answers yet\n5-hour limit: 23% used\n\nFrom Codex's newest session log."
+        );
     }
 
     #[test]

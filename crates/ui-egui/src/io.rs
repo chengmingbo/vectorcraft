@@ -323,7 +323,7 @@ fn with_extension(path: &str, ext: &str, keeps: impl Fn(&Format) -> bool) -> Str
 }
 
 /// The active document's file name with extension `ext`, and its folder.
-fn suggested(app: &VectorcraftApp, ext: &str) -> (String, Option<String>) {
+pub(crate) fn suggested(app: &VectorcraftApp, ext: &str) -> (String, Option<String>) {
     let st = app.session.active();
     let t = st.map(|d| d.path.clone().unwrap_or_else(|| d.doc.title.clone())).unwrap_or_else(|| "Untitled".into());
     let folder = st.and_then(|d| d.path.as_deref()).and_then(|p| std::path::Path::new(p).parent()).map(|p| p.to_string_lossy().to_string());

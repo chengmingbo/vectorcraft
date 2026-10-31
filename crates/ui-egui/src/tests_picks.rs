@@ -195,6 +195,29 @@ fn save_as_goes_on_with_the_path_picked() {
 }
 
 #[test]
+fn save_and_export_dialogs_follow_the_active_file_after_switching_documents() {
+    let (mut app, shown, _) = app();
+    for path in ["/art/first/Poster.svg", "/art/second/Diagram.svg"] {
+        app.run("file.open", json!({"path": path})).unwrap();
+    }
+    for (index, folder, stem) in [(0, "/art/first", "Poster"), (1, "/art/second", "Diagram"), (0, "/art/first", "Poster")] {
+        app.run("document.activate", json!({"index": index})).unwrap();
+        for (command, name) in
+            [("file.saveAs", format!("{stem}.svg")), ("file.saveCopy", format!("{stem} copy.svg")), ("file.export.png", format!("{stem}.png"))]
+        {
+            assert!(app.run(command, json!({})).is_err());
+            let requests = shown.requests();
+            let [PickRequest::Save(pick)] = requests.as_slice() else { panic!("expected one save panel: {requests:?}") };
+            assert_eq!(pick.folder.as_deref(), Some(folder), "{command}");
+            assert_eq!(pick.name, name, "{command}");
+            shown.answer(&[]);
+            poll(&mut app);
+            assert!(!app.file_dialog_open());
+        }
+    }
+}
+
+#[test]
 fn a_dialogs_folder_button_fills_its_field_when_the_picker_answers() {
     let (mut app, shown, _) = app();
     let mut d = Dialog::new("exportForScreens", json!({"folder": ""}));

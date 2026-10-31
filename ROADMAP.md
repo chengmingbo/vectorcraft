@@ -9,7 +9,7 @@
 
 **Stage: alpha** · next: beta, ~13 points (ready for real work ~62% → ~75%, and reliable `.ai` exchange) and ~170–270 h away
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-16 · **Change:** minor (about 160 community PRs of 2026-10-15/16: PDF import crash fixes, Dimension tool, legacy `.ai` save, Intertwine, web pen input, Image Trace fixes, `.ai`/EPS/PDF import fidelity, Bulgarian, Greek, Swedish and Finnish catalogs; headline numbers unchanged) · **Target:** Adobe Illustrator 2026 (30.x)
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-29 · **Change:** minor (about 160 community PRs of 2026-10-15/16: PDF import crash fixes, Dimension tool, legacy `.ai` save, Intertwine, web pen input, Image Trace fixes, `.ai`/EPS/PDF import fidelity, Bulgarian, Greek, Swedish and Finnish catalogs; headline numbers unchanged) · **Target:** Adobe Illustrator 2026 (30.x)
 
 VectorCraft is a clean-room, open-source, pure-Rust reimplementation of the Adobe Illustrator workflow. It runs
 on macOS, Windows, Linux, FreeBSD and the web (WASM), and agents can drive all of it over MCP, the CLI and a JSON
@@ -127,6 +127,8 @@ Ranked; detail in [docs/roadmap.md](docs/roadmap.md) and [docs/gaps.md](docs/gap
 6. **Then:** type core and advanced type (G4), the Illustrator 2026 additions (G13), 3D (G3).
 
 ## Progress log
+
+- 2026-10-29: Local 0.12.1 build fixes macOS Save As / export sheets falling back to an old directory. Export for Screens starts beside the active document, including after moving or saving it elsewhere. AI Assistant panel and background tool execution retained. Scores and estimates unchanged.
 
 - 2026-10-14: Document fonts register every explicitly supplied craft-fonts family after the existing Japanese, Arabic and Thai prefix; optional empty input remains supported. Headline scores and estimates are unchanged.
 
